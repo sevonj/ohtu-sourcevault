@@ -2,8 +2,7 @@ def convert_to_bibtex(type, **fields):
     """
     Luo BibTeX-viitteen.
 
-    :param entry_type: Viitteen tyyppi, esim. 'article', 'book'.
-    :param identifier: Ainutlaatuinen tunniste viitteelle.
+    :param type: Viitteen tyyppi, esim. 'article', 'book'.
     :param fields: Avain-arvo -parit, jotka kuvaavat viitettä (esim. author='Martin, Robert', title='Kirjan nimi').
     :return: BibTeX merkkijonomuodossa.
     """
@@ -15,7 +14,9 @@ def convert_to_bibtex(type, **fields):
         identifier = names[0].split(", ")[0]
     
     identifier += fields["year"][-2:]
-    bibtex_str = f"@{type}{{{identifier}}},\n"
+    bibtex_str = f"@{type}" + "{" + f"{identifier},\n"
     for field, value in fields.items():
         bibtex_str += f"    {field} = {{{value}}},\n"
     return bibtex_str + "}\n"
+
+print(convert_to_bibtex("book",author="Martin, Robert",title="Clean Code: A Handbook of Agile Software Craftsmanship",year="2008",publisher="Prentice Hall")) 
