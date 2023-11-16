@@ -19,6 +19,3 @@ def convert_to_bibtex(type, **fields):
     for field, value in fields.items():
         bibtex_str += f"    {field} = {{{value}}},\n"
     return bibtex_str + "}\n"
-
-
-print(convert_to_bibtex("book",author="Martin, Robert",title="Clean Code: A Handbook of Agile Software Craftsmanship",year="2008",publisher="Prentice Hall"))
