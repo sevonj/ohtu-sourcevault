@@ -4,12 +4,11 @@ import re
 
 class Writer:
     """Kirjoittaa Rootin antamaa BibTeXiä annettuun lokaatioon"""
-
-    def __init__(self, location, content = []):
+    def __init__(self, location):
         self.location = location
-        self.content = content
     
     def read_from_file(self):
+        refs = []
         with open(self.location, "r") as file:
             data = file.read()
 
@@ -24,13 +23,14 @@ class Writer:
                 fields = re.findall(r'(\w+)\s*=\s*\{(.+?)\}', ref_body, re.DOTALL)
                 fields_dict = {field.strip() : value.strip() for field, value in fields}
 
-                self.content.append(Reference(ref_type, **fields_dict))
+                refs.append(Reference(ref_type, **fields_dict))
+        return refs
 
     
-    def write_all_to_file(self):
-        if self.content != []:
+    def write_all_to_file(self, content):
+        if content != []:
             with open(self.location, "w") as file:
-                for ref in self.content:
+                for ref in content:
                     bibtex_str = convert_to_bibtex(ref.reference_type, **ref.fields)
                     file.write(bibtex_str)
 
