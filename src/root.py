@@ -1,44 +1,61 @@
 from writer import Writer
+from bibtex_converter import convert_to_bibtex
+from source_constructor import Book
 
 
 class Root:
-    """toiminnan ydin jota UI käskyttää
-
+    """
+    Toiminnan ydin jota UI käskyttää.
     ...
 
     Attributes
     ----------
-    sources : list
-        lista lähdeolioista
+    my_sources : list
+        Lista lähdeolioista.
     location : str
-        minne tallennetaan
+        Minne tallennetaan.
 
     Methods
     -------
     write_sources_bibtex():
-        kirjottaa lähdeoliot bibtexinä tallennuspaikkaan
+        Kirjottaa lähdeoliot bibtexinä tallennuspaikkaan.
     add_source():
-        lisää annetun lähdeolion lähdelistaan
+        Lisää annetun lähdeolion lähdelistaan.
     """
 
     def __init__(self, sources = [], location = "src\data"):
+        """
+        Luokan konstruktori.
+        ...
+
+        Parameters
+        ----------
+        sources : list
+            Lista lähdeolioista.
+        location : str
+            Minne tallennetaan.
+        """
         self.my_sources = sources
         self.location   = location
 
 
     def write_sources_bibtex(self):
-        pass
-        # ensin kutsutaan Tuukan tekemä bibtex "muotoilija"
-        # muotoilijan luoma bibtex tektsi kirjoitetaan "kirjuri" luokalla
-
-        #
-        content = ""
-        for source in self.my_sources:
-            content.join('Bibtex_Converter(source)'\n\n)
-                        
+        """
+        Kirjottaa lähdeoliot bibtexinä tallennuspaikkaan.
+        ...
+        """
+        content="\n".join([convert_to_bibtex('book', source) for source in self.my_sources])
         Writer(self.location, content)
-        
+
 
     def add_source(self, source_info):
-        pass
-        self.my_sources.add("Call source_constructor(source_info) here")
+        """
+        Lisää annetun lähdeolion lähdelistaan.
+        ...
+
+        Parameters
+        ----------
+        source_info : str
+            Lähdeolion tiedot string-muodossa.
+        """
+        self.my_sources.add(Book(source_info[0], source_info[1], source_info[2], source_info[3]))
