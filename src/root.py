@@ -23,7 +23,7 @@ class Root:
         Lisää annetun lähdeolion lähdelistaan.
     """
 
-    def __init__(self, sources = [], location = "src\data"):
+    def __init__(self, writer, sources = [], location = "src\data"):
         """
         Luokan konstruktori.
         ...
@@ -35,6 +35,7 @@ class Root:
         location : str
             Minne tallennetaan.
         """
+        self.writer = writer
         self.my_sources = sources
         self.location   = location
 
@@ -43,9 +44,10 @@ class Root:
         """
         Kirjottaa lähdeoliot bibtexinä tallennuspaikkaan.
         ...
+       
         """
-        content="\n".join([convert_to_bibtex('book', source) for source in self.my_sources])
-        Writer(self.location, content)
+        content="\n".join([convert_to_bibtex('book', **source.generate_dict()) for source in self.my_sources])
+        self.writer.write_all_to_file(content)
 
 
     def add_source(self, source_info):
@@ -58,4 +60,4 @@ class Root:
         source_info : str
             Lähdeolion tiedot string-muodossa.
         """
-        self.my_sources.add(Book(source_info[0], source_info[1], source_info[2], source_info[3]))
+        self.my_sources.append(Book(source_info[0], source_info[1], source_info[2], source_info[3]))

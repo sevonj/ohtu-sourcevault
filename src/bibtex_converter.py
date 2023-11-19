@@ -6,7 +6,6 @@ def convert_to_bibtex(type, **fields):
     :param fields: Avain-arvo -parit, jotka kuvaavat viitettä (esim. author='Martin, Robert', title='Kirjan nimi').
     :return: BibTeX merkkijonomuodossa.
     """
-    
     names = fields["author"].split(" and ")
     identifier = "".join(s.split()[-1][0] for s in names)
 

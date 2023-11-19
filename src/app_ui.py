@@ -1,8 +1,8 @@
 from root import Root
 
 class AppUI:
-    def __init__(self):
-        self.value = 1
+    def __init__(self, root):
+        self.root = root
 
     def run_app(self):
         while True:
@@ -12,36 +12,29 @@ class AppUI:
                 
                 case "1":
                     #Uuden lähteen luonti
-                    pass
-                    """
-                    author = input("insert author")
-                    title = input("insert title")
-                    publisher = input("insert publisher")
-                    year = input("insert year")
+                    
+                    author = input("insert author: ")
+                    title = input("insert title: ")
+                    publisher = input("insert publisher: ")
+                    year = input("insert year: ")
                     source_info = [author, title, publisher, year]
-                    Root.add_source(source_info)
-                    """
+                    self.root.add_source(source_info)
+                    
                 
                 case "2":
                     #Lähteiden lukeminen inhimillisessä muodossa
-                    """
-                    for book in Root.sources:
+                    for book in self.root.my_sources:
                         print(book)
-                    """
-                    pass
                 
                 case "3":
                     #Bibtextiin kääntäminen
-                    """
-                    Root.write_sources_bibtex()
-                    """
-                    pass
+                    
+                    self.root.write_sources_bibtex()
+                    
                 
                 case "4":
                     #Lopetus
                     break
 
-if __name__ == "__main__":
-    ui = AppUI()
-    ui.run_app()
+
 
