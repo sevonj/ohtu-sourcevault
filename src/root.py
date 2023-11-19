@@ -23,7 +23,7 @@ class Root:
         Lisää annetun lähdeolion lähdelistaan.
     """
 
-    def __init__(self, writer, sources = [], location = "src\data"):
+    def __init__(self, writer, sources = [], location = "data.bib"):
         """
         Luokan konstruktori.
         ...
