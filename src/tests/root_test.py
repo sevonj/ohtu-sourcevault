@@ -6,6 +6,6 @@ class TestRoot(unittest.TestCase):
     def setUp(self):
         self.root_stub = Root(SourceStub())
 
-    def test_search(self):
+    def test_CheckKirjailija(self):
         self.assertAlmostEqual(self.root_stub.my_sources[0], 'Kirjailija_0')
     
