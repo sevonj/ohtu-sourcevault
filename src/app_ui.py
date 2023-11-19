@@ -19,7 +19,7 @@ class AppUI:
                     publisher = input("insert publisher")
                     year = input("insert year")
                     source_info = [author, title, publisher, year]
-                    Root.add_source(source_info[0], source_info[1], source_info[2], source_info[3])
+                    Root.add_source(source_info)
                     """
                 
                 case "2":
