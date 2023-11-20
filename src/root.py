@@ -1,6 +1,6 @@
 from writer import Writer
 from bibtex_converter import convert_to_bibtex
-from source_constructor import Book
+from reference import Reference
 
 
 class Root:
@@ -36,6 +36,7 @@ class Root:
             Minne tallennetaan.
         """
         self.writer = writer
+        self.writer.location = location
         self.my_sources = sources
         self.location   = location
 
@@ -46,11 +47,16 @@ class Root:
         ...
        
         """
-        content="\n".join([convert_to_bibtex('book', **source.generate_dict()) for source in self.my_sources])
-        self.writer.write_all_to_file(content)
+        self.writer.write_all_to_file(self.my_sources)
+
+    def read_sources_from_file(self):
+        try:
+            self.my_sources = self.writer.read_from_file()
+        except:
+            pass
 
 
-    def add_source(self, source_info):
+    def add_source(self, source_type, source_fields):
         """
         Lisää annetun lähdeolion lähdelistaan.
         ...
@@ -60,4 +66,4 @@ class Root:
         source_info : str
             Lähdeolion tiedot string-muodossa.
         """
-        self.my_sources.append(Book(source_info[0], source_info[1], source_info[2], source_info[3]))
+        self.my_sources.append(Reference(source_type, **source_fields))

@@ -31,6 +31,5 @@ class Writer:
         if content != []:
             with open(self.location, "w") as file:
                 for ref in content:
-                    #bibtex_str = convert_to_bibtex("ref.reference_type", **ref.fields)
-                    file.write(ref)
-
+                    bibtex_str = convert_to_bibtex(ref.reference_type, **ref.fields)
+                    file.write(bibtex_str)
