@@ -1,4 +1,5 @@
 from root import Root
+import os
 
 class AppUI:
     def __init__(self, root):
@@ -23,13 +24,21 @@ class AppUI:
                 
                 case "2":
                     #Lähteiden lukeminen inhimillisessä muodossa
-                    for book in self.root.my_sources:
+                    if not self.root.my_sources:
+                        print('no sources yet :/ \n')
+                    
+                    for i, book in enumerate(self.root.my_sources):
+                        print(f'Book {i+1}:')
                         print(book)
+                        print('\n')
                 
                 case "3":
                     #Bibtextiin kääntäminen
-                    
-                    self.root.write_sources_bibtex()
+                    if not self.root.my_sources:
+                        print('no sources yet :/ \n')
+                    else:
+                        print(f'Wrote to: {os.getcwd()}\{self.root.location} \n')
+                        self.root.write_sources_bibtex()
                     
                 
                 case "4":
