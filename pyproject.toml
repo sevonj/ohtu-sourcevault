@@ -11,6 +11,7 @@ python = "^3.11"
 [tool.poetry.group.dev.dependencies]
 pylint = "^3.0.2"
 pytest = "^7.4.3"
+coverage = "^7.3.2"
 
 
 [build-system]
