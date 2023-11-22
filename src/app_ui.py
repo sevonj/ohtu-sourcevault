@@ -69,7 +69,6 @@ class AppUI:
 
                         break
                             
-                    
                     if skip:
                         continue
 
@@ -92,9 +91,6 @@ class AppUI:
                     
                     print("Reference added")
 
-                    
-                    
-                
                 case "2":
                     #Lähteiden lukeminen inhimillisessä muodossa
                     if not self.root.my_sources:

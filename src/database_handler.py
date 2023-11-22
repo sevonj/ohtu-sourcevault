@@ -3,10 +3,51 @@ from reference import Reference
 
 
 class Database:
+    """
+    Luo SQLite-tietokannan ja hallinnoi sitä.
+    ...
+
+    Attributes
+    ----------
+    location : str
+        Minne tallennetaan.
+
+    Methods
+    -------
+    add_reference_to_database()
+        Tallentaa lähdeolion tietokantaan.
+    clear_database()
+        Tyhjentää tietokannan.
+    initialize_database():
+        Alustaa tietokannan.
+    get_all_references():
+        Hakee tietokantaan tallennetut lähdeoliot.
+    update_database():
+        Päivittää tietokannan sisällön.
+    """
+
     def __init__(self, location):
+        """
+        Luokan konstruktori.
+        ...
+
+        Parameters
+        ----------
+        location : str
+            Minne tallennetaan.
+        """
         self.location = location
 
     def add_reference_to_database(self, reference):
+        """
+        Tallentaa lähdeolion tietokantaan.
+        ...
+
+        Parameters
+        ----------
+        reference : Reference
+            Lähdeolio joka halutaan tallentaa tietokantaan.
+        """
         connection = sqlite3.connect(self.location)
         cursor = connection.cursor()
 
@@ -36,6 +77,11 @@ class Database:
 
 
     def clear_database(self):
+        """
+        Tyhjentää tietokannan.
+        ...
+
+        """
         connection = sqlite3.connect(self.location)
         cursor = connection.cursor()
 
@@ -46,6 +92,11 @@ class Database:
         connection.close()
 
     def initialize_database(self):
+        """
+        Alustaa tietokannan.
+        ...
+
+        """
         connection = sqlite3.connect(self.location)
         cursor = connection.cursor()
 
@@ -79,6 +130,15 @@ class Database:
         connection.close()
     
     def get_all_references(self):
+        """
+        Hakee tietokantaan tallennetut lähdeoliot.
+        ...
+
+        Returns
+        -------
+        references : list
+            Tietokantaan tallennetut lähdeoliot
+        """
         connection = sqlite3.connect(self.location)
         cursor = connection.cursor()
 
@@ -132,6 +192,15 @@ class Database:
         return references
 
     def update_database(self, refs:list):
+        """
+        Päivittää tietokannan sisällön.
+        ...
+
+        Parameters
+        ----------
+        refs : list
+            Lähdeoliot, jotka halutaan tallentaa tietokantaan
+        """
         connection = sqlite3.connect(self.location)
         self.clear_database()
         self.initialize_database()
