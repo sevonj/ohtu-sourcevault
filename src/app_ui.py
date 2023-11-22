@@ -117,8 +117,13 @@ class AppUI:
                     pass
                 
                 case "5":
-                    # näytä citation_key:n perusteella viite
-                    pass
+                    citation_key = input("Enter the citation key of the reference you wish to examine: ")
+                    ref = self.root.get_reference_by_key(citation_key)
+
+                    if not ref:
+                        print(f"Citation key {citation_key} did not match any references\n")
+                        continue
+                    print(str(ref))
                 
                 case "6":
                     # poista citation_key:n perusteella
