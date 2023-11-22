@@ -5,6 +5,16 @@ class Reference:
         self.fields = fields
         self.tags = tags
     
+    def generate_citation_key(self):
+        names = str(self.fields.get("author")).split(" and ")
+        citation_key = "".join(s.split()[-1][0] for s in names)
+
+        if len(names) == 1:
+            citation_key = names[0].split(", ")[0]
+        
+        citation_key += str(self.fields.get("year"))[-2:]
+        return citation_key
+    
     def __str__(self):
         op = f"{self.reference_type}:\n"
         for k, v in self.fields.items():

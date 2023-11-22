@@ -60,17 +60,27 @@ class Root:
             pass
 
 
-    def add_source(self, source_type, source_fields):
+    def add_source(self, ref):
         """
         Lisää annetun lähdeolion lähdelistaan.
         ...
 
         Parameters
         ----------
-        source_info : str
-            Lähdeolion tiedot string-muodossa.
+        source_info : Reference
+            Lähdeolion tiedot.
         """
-        self.my_sources.append(Reference(source_type, **source_fields))
+        while True:
+            found_duplicate = False
+            for existing_ref in self.my_sources:
+                if existing_ref.citation_key == ref.citation_key:
+                    # Duplicate, so modify <ref> to fit
+                    ref.citation_key += ref.citation_key[-1]
+                    found_duplicate = True
+            if not found_duplicate:
+                break
+        
+        self.my_sources.append(ref)
 
     """
     todo:

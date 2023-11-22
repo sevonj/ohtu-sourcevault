@@ -1,4 +1,5 @@
 from root import Root
+from reference import Reference
 import os
 
 class AppUI:
@@ -17,6 +18,7 @@ class AppUI:
                     #Uuden lähteen luonti
 
                     skip = False
+                    reference_type = ""
                     fields_data = {}
 
                     while True:
@@ -31,7 +33,7 @@ class AppUI:
                             fields_data["title"] = title
                             fields_data["year"] = year
                             fields_data["publisher"] = publisher
-                            self.root.add_source("book", fields_data)
+                            reference_type = "book"
                         elif source_type == "2":
                             author = input("insert author: ")
                             title = input("insert title: ")
@@ -46,7 +48,7 @@ class AppUI:
                             fields_data["year"] = year
                             fields_data["volume"] = volume
                             fields_data["pages"] = pages
-                            self.root.add_source("article", fields_data)
+                            reference_type = "article"
                         elif source_type == "3":
                             author = input("insert author: ")
                             title = input("insert title: ")
@@ -57,7 +59,7 @@ class AppUI:
                             fields_data["title"] = title
                             fields_data["year"] = year
                             fields_data["volume"] = booktitle
-                            self.root.add_source("inproceeding", fields_data)
+                            reference_type = "inproceeding"
                         elif source_type == "4":
                             skip = True
                         else:
@@ -69,6 +71,23 @@ class AppUI:
                     
                     if skip:
                         continue
+
+                    ref = Reference(reference_type, **fields_data)
+                    ref.citation_key = ref.generate_citation_key()
+                    
+                    tags = []
+                        
+                    while True:
+                        # Read tags
+                        tag = input("Enter a tag or type q to stop: ").strip()
+                        if tag == "q":
+                            break
+                        else:
+                            tags.append(tag)
+                    
+                    ref.tags = tags
+                    
+                    self.root.add_source(ref)
                     
                     print("Reference added")
 
