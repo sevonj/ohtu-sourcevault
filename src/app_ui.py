@@ -111,9 +111,20 @@ class AppUI:
                     else:
                         print(f'Wrote to: {os.getcwd()}\{self.root.location} \n')
                         self.root.write_sources_bibtex()
-                    
                 
                 case "4":
+                    # listaa kaikki citation_keyt
+                    pass
+                
+                case "5":
+                    # näytä citation_key:n perusteella viite
+                    pass
+                
+                case "6":
+                    # poista citation_key:n perusteella
+                    citation_key = input("Enter the citation key of the reference you wish to remove: ").strip()
+                
+                case "7":
                     #Lopetus
                     break
 
