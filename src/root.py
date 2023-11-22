@@ -89,3 +89,11 @@ class Root:
         for source in self.sources:
             self.database.add_source()
     """
+        self.my_sources.append(Reference(source_type, **source_fields))
+    
+    def remove_reference(self, citation_key):
+        for i, ref in enumerate(self.my_sources):
+            if ref.citation_key == citation_key:
+                self.my_sources.pop(i)
+                return True
+        return False
