@@ -11,8 +11,8 @@ class Database:
         cursor = connection.cursor()
 
         cursor.execute('''
-            INSERT INTO bibtex_references (citation_key, reference_type, author, title, year, booktitle, volume, pages, journal) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+            INSERT INTO bibtex_references (citation_key, reference_type, author, title, year, booktitle, volume, pages, journal, publisher) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
             (reference.citation_key,
              reference.reference_type,
              reference.fields.get('author'),
@@ -21,7 +21,8 @@ class Database:
              reference.fields.get('booktitle'),
              reference.fields.get('volume'),
              reference.fields.get('pages'),
-             reference.fields.get('journal')))
+             reference.fields.get('journal'),
+             reference.fields.get('publisher')))
 
         reference_id = cursor.lastrowid
 
@@ -59,9 +60,11 @@ class Database:
                 booktitle TEXT,
                 volume INTEGER,
                 pages TEXT,
-                journal TEXT
+                journal TEXT,
+                publisher TEXT
             )
         ''')
+
 
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS bibtex_tags (
@@ -74,3 +77,56 @@ class Database:
 
         connection.commit()
         connection.close()
+    
+    def get_all_references(self):
+        connection = sqlite3.connect(self.location)
+        cursor = connection.cursor()
+
+        # Hae viitteet
+        cursor.execute('SELECT * FROM bibtex_references')
+        references_rows = cursor.fetchall()
+
+        references = []
+        for row in references_rows:
+            # Hae tagit
+            cursor.execute('SELECT tag FROM bibtex_tags WHERE reference_id = ?', (row[0],))
+            tags = [tag_row[0] for tag_row in cursor.fetchall()]
+
+            reference = None
+            if row[2] == "book":
+                reference = Reference(
+                    reference_type=row[2],
+                    citation_key=row[1],
+                    tags=tags,
+                    author=row[3],
+                    title=row[4],
+                    year=row[5],
+                    publisher=row[10]
+                )
+            elif row[2] == "article":
+                reference = Reference(
+                    reference_type=row[2],
+                    citation_key=row[1],
+                    tags=tags,
+                    author=row[3],
+                    title=row[4],
+                    journal=row[9],
+                    year=row[5],
+                    volume=row[7],
+                    pages=row[8]
+                )
+            elif row[2] == "inproceeding":
+                reference = Reference(
+                    reference_type=row[2],
+                    citation_key=row[1],
+                    tags=tags,
+                    author=row[3],
+                    title=row[4],
+                    year=row[5],
+                    booktitle=row[6]
+                )
+
+            references.append(reference)
+
+        connection.close()
+        return references
