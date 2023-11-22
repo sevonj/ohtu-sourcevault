@@ -130,3 +130,15 @@ class Database:
 
         connection.close()
         return references
+
+    def update_database(self, refs:list):
+        connection = sqlite3.connect(self.location)
+
+        self.clear_database()
+        self.initialize_database()
+
+        for ref in refs:
+            self.add_reference_to_database(ref)
+        
+        connection.commit()
+        connection.close()
