@@ -23,7 +23,7 @@ class Root:
         Lisää annetun lähdeolion lähdelistaan.
     """
 
-    def __init__(self, writer, sources = [], location = "data.bib"):
+    def __init__(self, data_handler, writer, sources = [], location = "data.bib"):
         """
         Luokan konstruktori.
         ...
@@ -35,10 +35,14 @@ class Root:
         location : str
             Minne tallennetaan.
         """
+        self.data_handler = data_handler
         self.writer = writer
         self.writer.location = location
         self.my_sources = sources
         self.location   = location
+        #todo:
+        #self.database = database
+        #self.my_sources = self.database.get_sources()
 
 
     def write_sources_bibtex(self):
@@ -67,3 +71,11 @@ class Root:
             Lähdeolion tiedot string-muodossa.
         """
         self.my_sources.append(Reference(source_type, **source_fields))
+
+    """
+    todo:
+    def save_to_database(self, self.sources)
+        self.database.reset()
+        for source in self.sources:
+            self.database.add_source()
+    """
