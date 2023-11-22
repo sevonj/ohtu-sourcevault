@@ -133,7 +133,6 @@ class Database:
 
     def update_database(self, refs:list):
         connection = sqlite3.connect(self.location)
-
         self.clear_database()
         self.initialize_database()
 
