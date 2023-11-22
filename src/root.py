@@ -81,15 +81,6 @@ class Root:
                 break
         
         self.my_sources.append(ref)
-
-    """
-    todo:
-    def save_to_database(self, self.sources)
-        self.database.reset()
-        for source in self.sources:
-            self.database.add_source()
-    """
-        self.my_sources.append(Reference(source_type, **source_fields))
     
     def remove_reference(self, citation_key):
         for i, ref in enumerate(self.my_sources):
