@@ -52,6 +52,9 @@ class Root:
        
         """
         self.writer.write_all_to_file(self.my_sources)
+    
+    def update_database(self):
+        self.data_handler.update_database(self.my_sources)
 
     def read_sources_from_database(self):
         try:

@@ -125,8 +125,8 @@ class AppUI:
 
                     if not ref:
                         print(f"Citation key {citation_key} did not match any references\n")
-                        continue
-                    print(str(ref))
+                    else:
+                        print(str(ref))
                 
                 case "6":
                     # poista citation_key:n perusteella
@@ -139,5 +139,4 @@ class AppUI:
                 case "7":
                     #Lopetus
                     break
-        
-
+        self.root.update_database()

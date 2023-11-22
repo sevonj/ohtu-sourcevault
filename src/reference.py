@@ -16,7 +16,12 @@ class Reference:
         return citation_key
     
     def __str__(self):
-        op = f"{self.reference_type}:\n"
+        op = f"{self.citation_key}, {self.reference_type}:\n"
         for k, v in self.fields.items():
             op += f"{k} = {v}\n"
+        if len(self.tags) == 0:
+            op += "No tags associated.\n"
+        else:
+            for i, tag in enumerate(self.tags):
+                op += f"Tag {i+1}: {tag}\n"
         return op
