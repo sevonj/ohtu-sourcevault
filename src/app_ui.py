@@ -7,10 +7,11 @@ class AppUI:
         self.root = root
 
     def run_app(self):
-        self.root.read_sources_from_file()
+        self.root.read_sources_from_database()
         
         while True:
-            command = input("1 : create new\n2 : read sources\n3 : create bibtext\n4 : stop\n")
+            command = input(("1 : create new\n2 : read sources\n3 : create bibtext\n4 : list all citation keys\n"
+                            "5 : show based on citation key\n6 : delete based on citation key\n7 : exit program\n"))
 
             match command:
                 
@@ -114,7 +115,9 @@ class AppUI:
                 
                 case "4":
                     # listaa kaikki citation_keyt
-                    pass
+                    print(f"There exists {len(self.root.my_sources)} citation keys:")
+                    for ref in self.root.my_sources:
+                        print(ref.citation_key)
                 
                 case "5":
                     # näytä citation_key:n perusteella viite
@@ -123,10 +126,13 @@ class AppUI:
                 case "6":
                     # poista citation_key:n perusteella
                     citation_key = input("Enter the citation key of the reference you wish to remove: ").strip()
+                    if self.root.remove_reference(citation_key):
+                        print("Citation removed succesfully.")
+                    else:
+                        print("No such citation.")
                 
                 case "7":
                     #Lopetus
                     break
-
-
+        
 

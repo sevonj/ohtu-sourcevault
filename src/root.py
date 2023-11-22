@@ -53,9 +53,9 @@ class Root:
         """
         self.writer.write_all_to_file(self.my_sources)
 
-    def read_sources_from_file(self):
+    def read_sources_from_database(self):
         try:
-            self.my_sources = self.writer.read_from_file()
+            self.my_sources = self.data_handler.get_all_references()
         except:
             pass
 
