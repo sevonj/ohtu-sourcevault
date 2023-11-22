@@ -88,3 +88,9 @@ class Root:
                 self.my_sources.pop(i)
                 return True
         return False
+    
+    def get_reference_by_key(self, citation_key):
+        for ref in self.my_sources:
+            if ref.citation_key == citation_key:
+                return ref
+        return False
