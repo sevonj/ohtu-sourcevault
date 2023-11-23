@@ -10,8 +10,8 @@ class AppUI:
         self.root.read_sources_from_database()
         
         while True:
-            command = self.root.io_handler.read_input(("1 : create new\n2 : read sources\n3 : create bibtext\n4 : list all citation keys\n"
-                            "5 : show based on citation key\n6 : delete based on citation key\n7 : exit program\n"))
+            command = self.root.io_handler.read_input(("\n1 : create new\n2 : read sources\n3 : create bibtext\n4 : list all citation keys\n"
+                            "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag\n8 : exit program\n"))
 
             match command:
                 
@@ -133,6 +133,21 @@ class AppUI:
                         self.root.io_handler.write_output("No such citation.")
                 
                 case "7":
+                    tag_search = self.root.io_handler.read_input("Enter the tag you want to search by or q to quit: ").strip()
+                    if tag_search == "q":
+                        continue
+
+                    found_refs = list(filter(lambda x: tag_search in x.tags, self.root.my_sources))
+
+                    if len(found_refs) == 0:
+                        self.root.io_handler.write_output(f"No sources found with tag {tag_search}!")
+                    else:
+                        self.root.io_handler.write_output(f"Found {len(found_refs)} references with tag: {tag_search}\n")
+                        for ref in found_refs:
+                            self.root.io_handler.write_output(str(ref))
+                    
+                
+                case "8":
                     #Lopetus
                     break
         self.root.update_database()
