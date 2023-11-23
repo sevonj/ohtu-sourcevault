@@ -10,8 +10,8 @@ class AppUI:
         self.root.read_sources_from_database()
         
         while True:
-            command = self.root.io_handler.read_input(("1 : create new\n2 : read sources\n3 : create bibtext\n4 : list all citation keys\n"
-                            "5 : show based on citation key\n6 : delete based on citation key\n7 : exit program\n"))
+            command = self.root.io_handler.read_input(("1 : create new\n2 : list sources as text\n3 : create bibtext\n4 : list all citation keys\n"
+                            "5 : search source by citation key\n6 : delete source based on citation key\n7 : exit program\n"))
 
             match command:
                 
@@ -24,48 +24,49 @@ class AppUI:
 
                     while True:
                         source_type = self.root.io_handler.read_input("Choose source type (type a number):\n1. Book\n2. Article\n3. Inproceeding\n4. Cancel operation\nChoice: ")
-                        if source_type == "1":
-                            author = self.root.io_handler.read_input("insert author: ")
-                            title = self.root.io_handler.read_input("insert title: ")
-                            year = self.root.io_handler.read_input("insert year: ")
-                            publisher = self.root.io_handler.read_input("insert publisher: ")
+                        match source_type:
+                            case "1":
+                                author = self.root.io_handler.read_input("insert author: ")
+                                title = self.root.io_handler.read_input("insert title: ")
+                                year = self.root.io_handler.read_input("insert year: ")
+                                publisher = self.root.io_handler.read_input("insert publisher: ")
 
-                            fields_data["author"] = author
-                            fields_data["title"] = title
-                            fields_data["year"] = year
-                            fields_data["publisher"] = publisher
-                            reference_type = "book"
-                        elif source_type == "2":
-                            author = self.root.io_handler.read_input("insert author: ")
-                            title = self.root.io_handler.read_input("insert title: ")
-                            journal = self.root.io_handler.read_input("insert journal: ")
-                            year = self.root.io_handler.read_input("insert year: ")
-                            volume = self.root.io_handler.read_input("insert volume: ")
-                            pages = self.root.io_handler.read_input("insert pages (for example 38--46): ")
+                                fields_data["author"] = author
+                                fields_data["title"] = title
+                                fields_data["year"] = year
+                                fields_data["publisher"] = publisher
+                                reference_type = "book"
+                            case "2":
+                                author = self.root.io_handler.read_input("insert author: ")
+                                title = self.root.io_handler.read_input("insert title: ")
+                                journal = self.root.io_handler.read_input("insert journal: ")
+                                year = self.root.io_handler.read_input("insert year: ")
+                                volume = self.root.io_handler.read_input("insert volume: ")
+                                pages = self.root.io_handler.read_input("insert pages (for example 38--46): ")
 
-                            fields_data["author"] = author
-                            fields_data["title"] = title
-                            fields_data["journal"] = journal
-                            fields_data["year"] = year
-                            fields_data["volume"] = volume
-                            fields_data["pages"] = pages
-                            reference_type = "article"
-                        elif source_type == "3":
-                            author = self.root.io_handler.read_input("insert author: ")
-                            title = self.root.io_handler.read_input("insert title: ")
-                            year = self.root.io_handler.read_input("insert year: ")
-                            booktitle = self.root.io_handler.read_input("insert booktitle: ")
+                                fields_data["author"] = author
+                                fields_data["title"] = title
+                                fields_data["journal"] = journal
+                                fields_data["year"] = year
+                                fields_data["volume"] = volume
+                                fields_data["pages"] = pages
+                                reference_type = "article"
+                            case "3":
+                                author = self.root.io_handler.read_input("insert author: ")
+                                title = self.root.io_handler.read_input("insert title: ")
+                                year = self.root.io_handler.read_input("insert year: ")
+                                booktitle = self.root.io_handler.read_input("insert booktitle: ")
 
-                            fields_data["author"] = author
-                            fields_data["title"] = title
-                            fields_data["year"] = year
-                            fields_data["booktitle"] = booktitle
-                            reference_type = "inproceeding"
-                        elif source_type == "4":
-                            skip = True
-                        else:
-                            self.root.io_handler.write_output("Please print a valid option")
-                            continue
+                                fields_data["author"] = author
+                                fields_data["title"] = title
+                                fields_data["year"] = year
+                                fields_data["booktitle"] = booktitle
+                                reference_type = "inproceeding"
+                            case "4":
+                                skip = True
+                            case default:
+                                self.root.io_handler.write_output("Please print a valid option")
+                                continue
 
                         break
                             
