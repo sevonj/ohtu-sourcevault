@@ -59,7 +59,7 @@ class AppUI:
                             fields_data["author"] = author
                             fields_data["title"] = title
                             fields_data["year"] = year
-                            fields_data["volume"] = booktitle
+                            fields_data["booktitle"] = booktitle
                             reference_type = "inproceeding"
                         elif source_type == "4":
                             skip = True
