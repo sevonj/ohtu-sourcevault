@@ -24,49 +24,24 @@ class AppUI:
 
                     while True:
                         source_type = self.root.io_handler.read_input("Choose source type (type a number):\n1. Book\n2. Article\n3. Inproceeding\n4. Cancel operation\nChoice: ")
+                        required_fields = []
                         match source_type:
                             case "1":
-                                author = self.root.io_handler.read_input("insert author: ")
-                                title = self.root.io_handler.read_input("insert title: ")
-                                year = self.root.io_handler.read_input("insert year: ")
-                                publisher = self.root.io_handler.read_input("insert publisher: ")
-
-                                fields_data["author"] = author
-                                fields_data["title"] = title
-                                fields_data["year"] = year
-                                fields_data["publisher"] = publisher
+                                required_fields = "author|title|year|publisher"
                                 reference_type = "book"
                             case "2":
-                                author = self.root.io_handler.read_input("insert author: ")
-                                title = self.root.io_handler.read_input("insert title: ")
-                                journal = self.root.io_handler.read_input("insert journal: ")
-                                year = self.root.io_handler.read_input("insert year: ")
-                                volume = self.root.io_handler.read_input("insert volume: ")
-                                pages = self.root.io_handler.read_input("insert pages (for example 38--46): ")
-
-                                fields_data["author"] = author
-                                fields_data["title"] = title
-                                fields_data["journal"] = journal
-                                fields_data["year"] = year
-                                fields_data["volume"] = volume
-                                fields_data["pages"] = pages
+                                required_fields = "author|title|journal|year|volume|pages"
                                 reference_type = "article"
                             case "3":
-                                author = self.root.io_handler.read_input("insert author: ")
-                                title = self.root.io_handler.read_input("insert title: ")
-                                year = self.root.io_handler.read_input("insert year: ")
-                                booktitle = self.root.io_handler.read_input("insert booktitle: ")
-
-                                fields_data["author"] = author
-                                fields_data["title"] = title
-                                fields_data["year"] = year
-                                fields_data["booktitle"] = booktitle
-                                reference_type = "inproceeding"
+                                required_fields = "author|title|year|booktitle"
                             case "4":
-                                skip = True
+                                break
                             case default:
                                 self.root.io_handler.write_output("Please print a valid option")
                                 continue
+
+                                for field in required_fields.split("|"):
+                                    fields_data[field] = self.root.io_handler.read_input(f"insert {field}")                    
 
                         break
                             
