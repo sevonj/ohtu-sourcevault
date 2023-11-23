@@ -40,8 +40,8 @@ class AppUI:
                                 self.root.io_handler.write_output("Please print a valid option")
                                 continue
 
-                                for field in required_fields.split("|"):
-                                    fields_data[field] = self.root.io_handler.read_input(f"insert {field}")                    
+                        for field in required_fields.split("|"):
+                            fields_data[field] = self.root.io_handler.read_input(f"insert {field}: ")                    
 
                         break
                             
