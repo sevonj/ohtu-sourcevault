@@ -1,6 +1,7 @@
 from writer import Writer
 from bibtex_converter import convert_to_bibtex
 from reference import Reference
+from console_io import ConsoleIO
 
 
 class Root:
@@ -29,7 +30,7 @@ class Root:
         Etsii lähdeolion citation_keyn perusteella
     """
 
-    def __init__(self, data_handler, writer, sources = [], location = "data.bib"):
+    def __init__(self, data_handler, writer, io_handler = ConsoleIO(), sources = [], location = "data.bib"):
         """
         Luokan konstruktori.
         ...
@@ -42,6 +43,7 @@ class Root:
             Minne tallennetaan.
         """
         self.data_handler = data_handler
+        self.io_handler = io_handler
         self.writer = writer
         self.writer.location = location
         self.my_sources = sources
