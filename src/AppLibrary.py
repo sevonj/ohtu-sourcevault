@@ -13,7 +13,7 @@ class AppLibrary:
     def output_should_contain(self, value):
         if not value in self._io.outputs:
             raise AssertionError(
-                f"Output \"{value}\" is not in {str(outputs)}"
+                f"Output \"{value}\" is not in {str(self._io.outputs)}"
             )
 
     def input(self, value):
@@ -21,3 +21,7 @@ class AppLibrary:
 
     def run_application(self):
         self.app.run_app()
+
+    def clear(self):
+        self.root.data_handler.clear_database()
+        self.root.remove_reference("Kirjailija23")
