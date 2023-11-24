@@ -1,6 +1,11 @@
+*** Settings ***
+Library  ../AppLibrary.py
+
 *** Keywords ***
 Input Command
-    # syötä komento komentoriville
+    [Arguments]  ${command}
+    Input  ${command}
 
 Input Information
-    # syötä lähteen tietoja komentoriville
+    [Arguments]  ${data}
+    Input  ${data}

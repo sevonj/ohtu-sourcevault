@@ -11,3 +11,5 @@ Add Book Source With Valid Information
     Input Information  Julkaisija
     Input Command  q
     Input Command  8
+    Run Application
+    Output Should Contain  Reference added

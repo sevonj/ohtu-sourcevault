@@ -5,3 +5,5 @@
 htmlcov
 __pycache__
 *.bib
+*.html
+*.xml
