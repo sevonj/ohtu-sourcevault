@@ -6,6 +6,7 @@ from reference import Reference
 from stub_io import StubIO
 from bibtex_converter import convert_to_bibtex
 
+
 class TestRoot(unittest.TestCase):
     def setUp(self):
         app_writer = Writer("test_bibtexdata.bib")
@@ -13,10 +14,16 @@ class TestRoot(unittest.TestCase):
         self.root = Root(db, app_writer, StubIO([]))
 
     def test_can_add_source_to_database(self):
-        ref = Reference("book", "Martti08", tags=["good", "old"],
-                        year="2008", title="titled",
-                        author="Martti", publisher="publ")
-        
+        ref = Reference(
+            "book",
+            "Martti08",
+            tags=["good", "old"],
+            year="2008",
+            title="titled",
+            author="Martti",
+            publisher="publ",
+        )
+
         self.root.add_source(ref)
         self.root.update_database()
 
@@ -35,10 +42,16 @@ class TestRoot(unittest.TestCase):
         self.assertEqual(read_ref.tags[1], "old")
 
     def test_search_reference_with_key_works(self):
-        ref = Reference("book", "Martti08", tags=["good", "old"],
-                        year="2008", title="titled",
-                        author="Martti", publisher="publ")
-        
+        ref = Reference(
+            "book",
+            "Martti08",
+            tags=["good", "old"],
+            year="2008",
+            title="titled",
+            author="Martti",
+            publisher="publ",
+        )
+
         self.root.add_source(ref)
         valid_search = self.root.get_reference_by_key("Martti08")
         invalid_search = self.root.get_reference_by_key("Martti09")
@@ -46,7 +59,6 @@ class TestRoot(unittest.TestCase):
         self.assertEqual(reference, valid_search)
         self.assertEqual(False, invalid_search)
 
-    
     def test_can_remove_source_from_database(self):
         self.root.read_sources_from_database()
         # Not empty, contains source added in previous test
@@ -56,5 +68,3 @@ class TestRoot(unittest.TestCase):
         # Should now be empty
         self.root.read_sources_from_database()
         self.assertEqual(self.root.my_sources, [])
-
-    

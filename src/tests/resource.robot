@@ -1,5 +1,5 @@
 *** Settings ***
-Library  ../AppLibrary.py
+Library  ../app_library.py
 
 *** Keywords ***
 Input Command

@@ -1,6 +1,4 @@
-from writer import Writer
-from bibtex_converter import convert_to_bibtex
-from reference import Reference
+"""Moduuli joka toimii kaiken toiminnallisuuden juurena"""
 from console_io import ConsoleIO
 
 
@@ -30,7 +28,14 @@ class Root:
         Etsii lähdeolion citation_keyn perusteella
     """
 
-    def __init__(self, data_handler, writer, io_handler = ConsoleIO(), sources = [], location = "data.bib"):
+    def __init__(
+        self,
+        data_handler,
+        writer,
+        io_handler=ConsoleIO(),
+        sources=[],
+        location="data.bib",
+    ):
         """
         Luokan konstruktori.
         ...
@@ -47,16 +52,16 @@ class Root:
         self.writer = writer
         self.writer.location = location
         self.my_sources = sources
-        self.location   = location
+        self.location = location
 
     def write_sources_bibtex(self):
         """
         Kirjottaa lähdeoliot bibtexinä tallennuspaikkaan.
         ...
-       
+
         """
         self.writer.write_all_to_file(self.my_sources)
-    
+
     def update_database(self):
         """
         Päivittää tietokannan sisällön ohjelman sulkeutumisen yhteydessä
@@ -70,13 +75,12 @@ class Root:
         """
         Hakee tietokantaan tallennetut lähdeoliot
         ...
-        
+
         """
         try:
             self.my_sources = self.data_handler.get_all_references()
         except:
             pass
-
 
     def add_source(self, ref):
         """
@@ -97,9 +101,9 @@ class Root:
                     found_duplicate = True
             if not found_duplicate:
                 break
-        
+
         self.my_sources.append(ref)
-    
+
     def remove_reference(self, citation_key):
         """
         Poistaa lähdeolion citation_keyn perusteella
@@ -115,7 +119,7 @@ class Root:
                 self.my_sources.pop(i)
                 return True
         return False
-    
+
     def get_reference_by_key(self, citation_key):
         """
         Etsii lähdeolion citation_keyn perusteella
