@@ -1,0 +1,6 @@
+[run]
+source = .
+omit = ./venv/*,*tests*, *manage.py,*__init__.py, src\app_ui.py, src\console_io.py, src\tests\*, src\stub_io.py
+
+[report]
+omit = ./venv/*,*tests*, *manage.py,*__init__.py, src\app_ui.py, src\console_io.py, src\tests\*, src\stub_io.py

@@ -153,38 +153,41 @@ class Database:
             tags = [tag_row[0] for tag_row in cursor.fetchall()]
 
             reference = None
-            if row[2] == "book":
-                reference = Reference(
-                    reference_type=row[2],
-                    citation_key=row[1],
-                    tags=tags,
-                    author=row[3],
-                    title=row[4],
-                    year=row[5],
-                    publisher=row[10]
-                )
-            elif row[2] == "article":
-                reference = Reference(
-                    reference_type=row[2],
-                    citation_key=row[1],
-                    tags=tags,
-                    author=row[3],
-                    title=row[4],
-                    journal=row[9],
-                    year=row[5],
-                    volume=row[7],
-                    pages=row[8]
-                )
-            elif row[2] == "inproceeding":
-                reference = Reference(
-                    reference_type=row[2],
-                    citation_key=row[1],
-                    tags=tags,
-                    author=row[3],
-                    title=row[4],
-                    year=row[5],
-                    booktitle=row[6]
-                )
+            match row[2]:
+                case "book":
+                    reference = Reference(
+                        reference_type=row[2],
+                        citation_key=row[1],
+                        tags=tags,
+                        author=row[3],
+                        title=row[4],
+                        year=row[5],
+                        publisher=row[10]
+                    )
+
+                case "article":
+                    reference = Reference(
+                        reference_type=row[2],
+                        citation_key=row[1],
+                        tags=tags,
+                        author=row[3],
+                        title=row[4],
+                        journal=row[9],
+                        year=row[5],
+                        volume=row[7],
+                        pages=row[8]
+                    )
+
+                case "inproceeding":
+                    reference = Reference(
+                        reference_type=row[2],
+                        citation_key=row[1],
+                        tags=tags,
+                        author=row[3],
+                        title=row[4],
+                        year=row[5],
+                        booktitle=row[6]
+                    )
 
             references.append(reference)
 

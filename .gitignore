@@ -7,3 +7,5 @@ __pycache__
 *.bib
 *.html
 *.xml
+test_bibtexdata.bib
+test_database.db
