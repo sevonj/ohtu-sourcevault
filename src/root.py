@@ -1,4 +1,5 @@
 """Moduuli joka toimii kaiken toiminnallisuuden juurena"""
+from sqlite3 import OperationalError
 from console_io import ConsoleIO
 
 
@@ -33,7 +34,7 @@ class Root:
         data_handler,
         writer,
         io_handler=ConsoleIO(),
-        sources=[],
+        sources=None,
         location="data.bib",
     ):
         """
@@ -51,7 +52,8 @@ class Root:
         self.io_handler = io_handler
         self.writer = writer
         self.writer.location = location
-        self.my_sources = sources
+        if not sources:
+            self.my_sources = []
         self.location = location
 
     def write_sources_bibtex(self):
@@ -79,7 +81,7 @@ class Root:
         """
         try:
             self.my_sources = self.data_handler.get_all_references()
-        except:
+        except OperationalError:
             pass
 
     def add_source(self, ref):

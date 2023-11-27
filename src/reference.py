@@ -17,7 +17,7 @@ class Reference:
         kuvaus.
     """
 
-    def __init__(self, reference_type, citation_key="", tags=[], **fields):
+    def __init__(self, reference_type, citation_key="", tags=None, **fields):
         """
         Luokan konstruktori.
         ...
@@ -30,7 +30,8 @@ class Reference:
         self.reference_type = reference_type
         self.citation_key = citation_key
         self.fields = fields
-        self.tags = tags
+        if not tags:
+            self.tags = []
 
     def generate_citation_key(self):
         """
