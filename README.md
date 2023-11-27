@@ -1,6 +1,7 @@
 # sourcevault
 
 ![Workflow badge](https://github.com/Yytsi/sourcevault/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/Yytsi/sourcevault/graph/badge.svg?token=2QSRCPDGGL)](https://codecov.io/gh/Yytsi/sourcevault)  
 
 ![Github actions](https://github.com/Yytsi/sourcevault/actions)
 
