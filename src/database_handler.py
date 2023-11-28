@@ -54,7 +54,9 @@ class Database:
 
         cursor.execute(
             """
-            INSERT INTO bibtex_references (citation_key, reference_type, author, title, year, booktitle, volume, pages, journal, publisher, note, organization, address) 
+            INSERT INTO bibtex_references (citation_key, reference_type, author, title, year, 
+                                            booktitle, volume, pages, journal, publisher, 
+                                            note, organization, address) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (
                 reference.citation_key,
@@ -129,7 +131,6 @@ class Database:
             )
             """
         )
-
 
         cursor.execute(
             """
@@ -206,7 +207,7 @@ class Database:
                         year=row[5],
                         booktitle=row[6],
                     )
-                
+
                 case "unpublished":
                     reference = Reference(
                         reference_type=row[2],

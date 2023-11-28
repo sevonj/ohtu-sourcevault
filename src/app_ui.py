@@ -3,7 +3,6 @@ import os
 from reference import Reference
 
 
-
 class AppUI:
     """
     Kuvaus luokan päätehtävästä
@@ -115,10 +114,11 @@ class AppUI:
                 case "5":
                     required_fields = "title|author|organization|year|address"
                     reference_type = "manual"
-                case "6":            
+                case "6":
                     return
-                case default: # pylint: disable=unused-variable
-                    self.root.io_handler.write_output("Please pick a valid option")
+                case default:  # pylint: disable=unused-variable
+                    self.root.io_handler.write_output(
+                        "Please pick a valid option")
                     continue
 
             for field in required_fields.split("|"):
@@ -261,7 +261,8 @@ class AppUI:
             self.root.io_handler.write_output("exiting.")
             return
 
-        found_refs = list(filter(lambda x: tag_search in x.tags, self.root.my_sources))
+        found_refs = list(
+            filter(lambda x: tag_search in x.tags, self.root.my_sources))
 
         if len(found_refs) == 0:
             self.root.io_handler.write_output(
