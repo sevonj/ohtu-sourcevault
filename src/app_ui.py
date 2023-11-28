@@ -96,7 +96,7 @@ class AppUI:
 
         while True:
             source_type = self.root.io_handler.read_input(
-                "Choose source type (type a number):\n1. Book\n2. Article\n3. Inproceeding\n4. Cancel operation\nChoice: "
+                "Choose source type (type a number):\n1. Book\n2. Article\n3. Inproceedings\n4. Unpublished\n5. Manual\n6. Cancel\nChoice: "
             )
             required_fields = []
             match source_type:
@@ -108,8 +108,15 @@ class AppUI:
                     reference_type = "article"
                 case "3":
                     required_fields = "author|title|year|booktitle"
+                    reference_type = "inproceedings"
                 case "4":
-                    break
+                    required_fields = "author|title|note|year"
+                    reference_type = "unpublished"
+                case "5":
+                    required_fields = "title|author|organization|year|address"
+                    reference_type = "manual"
+                case "6":            
+                    return
                 case default: # pylint: disable=unused-variable
                     self.root.io_handler.write_output("Please pick a valid option")
                     continue
