@@ -1,7 +1,7 @@
 """Moduuli joka vastaa käyttäjän näkemästä käyttöliittymästä"""
 import os
 from reference import Reference
-
+from doi_seacher import DOISearcher
 
 class AppUI:
     """
@@ -47,7 +47,7 @@ class AppUI:
             command = self.root.io_handler.read_input(
                 (
                     "\n1 : create new\n2 : list sources as text\n3 : create bibtext\n4 : list all citation keys\n"
-                    "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag\n8 : exit program\n"
+                    "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag\n8 : find reference with DOI\n9 : exit program\n"
                 )
             )
 
@@ -72,11 +72,23 @@ class AppUI:
 
                 case "7":
                     self.search_by_key()
-
+                
                 case "8":
+                    self.search_by_doi()
+
+                case "9":
                     # Lopetus
                     break
         self.root.update_database()
+    
+    def search_by_doi(self):
+        doi = input("Enter a DOI: ")
+        ds = DOISearcher()
+        ref = ds.find_by_doi(doi)
+        self.root.add_source(ref)
+        # TODO! Add with tags!
+        print("Source added!")
+        
 
     def create_new(self):
         """
@@ -95,7 +107,7 @@ class AppUI:
 
         while True:
             source_type = self.root.io_handler.read_input(
-                "Choose source type (type a number):\n1. Book\n2. Article\n3. Inproceedings\n4. Unpublished\n5. Manual\n6. Cancel\nChoice: "
+                "Choose source type (type a number):\n1. Book\n2. Article\n3. Inproceedings\n4. Miscellaneous\n5. Phd thesis\n6. Cancel\nChoice: "
             )
             required_fields = []
             match source_type:
@@ -109,11 +121,11 @@ class AppUI:
                     required_fields = "author|title|year|booktitle"
                     reference_type = "inproceedings"
                 case "4":
-                    required_fields = "author|title|note|year"
-                    reference_type = "unpublished"
+                    required_fields = "author|title|howpublished|year|note"
+                    reference_type = "misc"
                 case "5":
-                    required_fields = "title|author|organization|year|address"
-                    reference_type = "manual"
+                    required_fields = "author|title|year|school|address|month"
+                    reference_type = "phdthesis"
                 case "6":
                     return
                 case default:  # pylint: disable=unused-variable
