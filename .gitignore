@@ -9,3 +9,4 @@ __pycache__
 *.xml
 test_bibtexdata.bib
 test_database.db
+.env
