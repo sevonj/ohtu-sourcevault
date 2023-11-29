@@ -72,7 +72,7 @@ class AppUI:
 
                 case "7":
                     self.search_by_key()
-                
+
                 case "8":
                     self.search_by_doi()
 
@@ -80,7 +80,7 @@ class AppUI:
                     # Lopetus
                     break
         self.root.update_database()
-    
+
     def search_by_doi(self):
         doi = input("Enter a DOI: ")
         ds = DOISearcher()
@@ -88,7 +88,7 @@ class AppUI:
         self.root.add_source(ref)
         # TODO! Add with tags!
         print("Source added!")
-        
+
 
     def create_new(self):
         """
@@ -286,3 +286,20 @@ class AppUI:
             )
             for ref in found_refs:
                 self.root.io_handler.write_output(str(ref))
+
+    def edit_by_key(self):
+        """
+        Kuvaus Funktion toiminnalisuudesta
+        ...
+
+        Parameters
+        ----------
+        muuttuja : tyyppi
+            kuvaus
+        """
+        citation_key = self.root.io_handler.read_input(
+            "Enter the citation key of the reference you wish to edit: "
+        ).strip()
+        # syötä tiedot placeholderina vanhat tiedot
+        # poista vanha
+        # lisää uusi
