@@ -1,6 +1,8 @@
 """Moduuli joka toimii kaiken toiminnallisuuden juurena"""
 from sqlite3 import OperationalError
 from console_io import ConsoleIO
+import botocore.exceptions
+import boto3.exceptions
 
 
 class Root:
@@ -33,6 +35,7 @@ class Root:
         self,
         data_handler,
         writer,
+        cloud_data_handler,
         io_handler=ConsoleIO(),
         sources=None,
         location="data.bib",
@@ -48,6 +51,7 @@ class Root:
         location : str
             Minne tallennetaan.
         """
+        self.cloud_data_handler = cloud_data_handler
         self.data_handler = data_handler
         self.io_handler = io_handler
         self.writer = writer
@@ -66,23 +70,32 @@ class Root:
 
     def update_database(self):
         """
-        Päivittää tietokannan sisällön ohjelman sulkeutumisen yhteydessä
+        1. Päivittää tietokannan sisällön ohjelman sulkeutumisen yhteydessä
+        2. Tallentaa tietokannan pilvipalveluun
         ...
 
 
         """
         self.data_handler.update_database(self.my_sources)
+        try:
+            self.cloud_data_handler.upload_references()
+        except boto3.exceptions.S3UploadFailedError:
+            print("Unable to upload database to cloud")
 
     def read_sources_from_database(self):
         """
-        Hakee tietokantaan tallennetut lähdeoliot
+        1. Hakee tietokannan pilvipalvelusta
+        2. Hakee tietokantaan tallennetut lähdeoliot
         ...
 
         """
         try:
+            self.cloud_data_handler.get_references()
             self.my_sources = self.data_handler.get_all_references()
         except OperationalError:
             pass
+        except botocore.exceptions.ClientError:
+            print("Unable to import database from cloud")
 
     def add_source(self, ref):
         """
