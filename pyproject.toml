@@ -10,6 +10,7 @@ python = "^3.11"
 pytest = "^7.4.3"
 habanero = "^1.2.3"
 boto3 = "^1.33.2"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^3.0.2"
