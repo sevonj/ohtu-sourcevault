@@ -55,9 +55,9 @@ class Database:
         cursor.execute(
             """
             INSERT INTO bibtex_references (citation_key, reference_type, author, title, year, 
-                                            booktitle, volume, pages, journal, publisher, 
-                                            note, organization, address) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                            booktitle, volume, pages, journal, publisher,
+                                            howpublished, note, school, address, month) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (
                 reference.citation_key,
                 reference.reference_type,
@@ -69,9 +69,11 @@ class Database:
                 reference.fields.get("pages"),
                 reference.fields.get("journal"),
                 reference.fields.get("publisher"),
+                reference.fields.get("howpublished"),
                 reference.fields.get("note"),
-                reference.fields.get("organization"),
+                reference.fields.get("school"),
                 reference.fields.get("address"),
+                reference.fields.get("month"),
             ),
         )
 
@@ -125,9 +127,11 @@ class Database:
                 pages TEXT,
                 journal TEXT,
                 publisher TEXT,
+                howpublished TEXT,
                 note TEXT,
-                organization TEXT,
-                address TEXT
+                school TEXT,
+                address TEXT,
+                month TEXT
             )
             """
         )
@@ -207,8 +211,8 @@ class Database:
                         year=row[5],
                         booktitle=row[6],
                     )
-
-                case "unpublished":
+                
+                case "misc":
                     reference = Reference(
                         reference_type=row[2],
                         citation_key=row[1],
@@ -216,19 +220,21 @@ class Database:
                         author=row[3],
                         title=row[4],
                         year=row[5],
-                        note=row[11]
+                        howpublished=row[11],
+                        note=row[12]
                     )
 
-                case "manual":
+                case "phdthesis":
                     reference = Reference(
                         reference_type=row[2],
                         citation_key=row[1],
                         tags=tags,
-                        title=row[4],
                         author=row[3],
-                        organization=row[12],
+                        title=row[4],
                         year=row[5],
-                        address=row[13]
+                        school=row[13],
+                        address=row[14],
+                        month=row[15]
                     )
 
             references.append(reference)
