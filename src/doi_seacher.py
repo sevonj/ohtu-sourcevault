@@ -11,7 +11,7 @@ class DOISearcher:
         ref_type, rest = entry.split("{", 1)
         ref_key, fields_part = rest.split(",", 1)
 
-        ref_type = ref_type.strip("@").strip()
+        ref_type = ref_type.strip().strip("@").strip()
         ref_key = ref_key.strip()
 
         fields = re.findall(r'(\w+)\s*=\s*(?:\{([^}]+)\}|(\w+))', fields_part)
