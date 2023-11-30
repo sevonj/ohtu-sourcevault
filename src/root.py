@@ -36,6 +36,7 @@ class Root:
         data_handler,
         writer,
         cloud_data_handler,
+        uses_database = True,
         io_handler=ConsoleIO(),
         sources=None,
         location="data.bib",
@@ -56,6 +57,7 @@ class Root:
         self.io_handler = io_handler
         self.writer = writer
         self.writer.location = location
+        self.uses_database = uses_database
         if not sources:
             self.my_sources = []
         self.location = location
@@ -77,10 +79,11 @@ class Root:
 
         """
         self.data_handler.update_database(self.my_sources)
-        try:
-            self.cloud_data_handler.upload_references()
-        except boto3.exceptions.S3UploadFailedError:
-            print("Unable to upload database to cloud")
+        if self.uses_database:
+            try:
+                self.cloud_data_handler.upload_references()
+            except boto3.exceptions.S3UploadFailedError:
+                print("Unable to upload database to cloud")
 
     def read_sources_from_database(self):
         """
@@ -90,7 +93,8 @@ class Root:
 
         """
         try:
-            self.cloud_data_handler.get_references()
+            if self.uses_database:
+                self.cloud_data_handler.get_references()
             self.my_sources = self.data_handler.get_all_references()
         except OperationalError:
             pass
