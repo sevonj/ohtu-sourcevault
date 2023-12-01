@@ -47,7 +47,8 @@ class AppUI:
             command = self.root.io_handler.read_input(
                 (
                     "\n1 : create new\n2 : list sources as text\n3 : create bibtext\n4 : list all citation keys\n"
-                    "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag\n8 : find reference with DOI\n9 : edit based on citation key\n10 : exit program\n"
+                    "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag"
+                    "\n8 : find reference with DOI\n9 : edit based on citation key\n10 : exit program\n"
                 )
             )
 
@@ -85,6 +86,15 @@ class AppUI:
         self.root.update_database()
 
     def search_by_doi(self):
+        """
+        Kuvaus Funktion toiminnalisuudesta
+        ...
+
+        Parameters
+        ----------
+        muuttuja : tyyppi
+            kuvaus
+        """
         doi = input("Enter a DOI: ")
         ds = DOISearcher()
         ref = ds.find_by_doi(doi)
@@ -292,13 +302,7 @@ class AppUI:
 
     def edit_by_key(self):
         """
-        Kuvaus Funktion toiminnalisuudesta
-        ...
-
-        Parameters
-        ----------
-        muuttuja : tyyppi
-            kuvaus
+        Muokkaa valittua viitettä.
         """
         citation_key = self.root.io_handler.read_input(
             "Enter the citation key of the reference you wish to edit: "

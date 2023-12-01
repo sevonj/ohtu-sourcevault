@@ -1,8 +1,8 @@
 """Moduuli joka toimii kaiken toiminnallisuuden juurena"""
 from sqlite3 import OperationalError
-from console_io import ConsoleIO
 import botocore.exceptions
 import boto3.exceptions
+from console_io import ConsoleIO
 
 
 class Root:

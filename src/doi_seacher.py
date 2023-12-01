@@ -1,12 +1,35 @@
+import re
 from habanero import cn
 from reference import Reference
-import re
 
 class DOISearcher:
+    """
+    Kuvaus luokan päätehtävästä
+    ...
+
+    Attributes
+    ----------
+    attr : tyyppi
+        Kuvaus
+
+    Methods
+    -------
+    method():
+        kuvaus.
+    """
     def __init__(self):
         pass
 
     def find_by_doi(self, doi="10.48550/arxiv.2304.08505"):
+        """
+        Kuvaus Funktion toiminnalisuudesta
+        ...
+
+        Parameters
+        ----------
+        muuttuja : tyyppi
+            kuvaus
+        """
         entry = cn.content_negotiation(ids=doi, format="bibentry")
         ref_type, rest = entry.split("{", 1)
         ref_key, fields_part = rest.split(",", 1)

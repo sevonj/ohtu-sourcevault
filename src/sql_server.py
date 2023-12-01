@@ -34,9 +34,27 @@ class ServerHandler:
             aws_secret_access_key=aws_secret_key,
             region_name='eu-north-1'
             )
-        
+
     def get_references(self):
+        """
+        Kuvaus Funktion toiminnalisuudesta
+        ...
+
+        Parameters
+        ----------
+        muuttuja : tyyppi
+            kuvaus
+        """
         self.s3.download_file(self.bucket_name, self.remote_db, self.local_db)
 
     def upload_references(self):
+        """
+        Kuvaus Funktion toiminnalisuudesta
+        ...
+
+        Parameters
+        ----------
+        muuttuja : tyyppi
+            kuvaus
+        """
         self.s3.upload_file(self.local_db, self.bucket_name, self.remote_db)
