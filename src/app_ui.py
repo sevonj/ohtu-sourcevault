@@ -47,7 +47,7 @@ class AppUI:
             command = self.root.io_handler.read_input(
                 (
                     "\n1 : create new\n2 : list sources as text\n3 : create bibtext\n4 : list all citation keys\n"
-                    "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag\n8 : find reference with DOI\n9 : exit program\n"
+                    "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag\n8 : find reference with DOI\n9 : edit based on citation key\n10 : exit program\n"
                 )
             )
 
@@ -77,6 +77,9 @@ class AppUI:
                     self.search_by_doi()
 
                 case "9":
+                    self.edit_by_key()
+
+                case "10":
                     # Lopetus
                     break
         self.root.update_database()
@@ -300,6 +303,42 @@ class AppUI:
         citation_key = self.root.io_handler.read_input(
             "Enter the citation key of the reference you wish to edit: "
         ).strip()
-        # syötä tiedot placeholderina vanhat tiedot
-        # poista vanha
-        # lisää uusi
+        self.root.io_handler.write_output("Type to edit or leave blank for [original value]")
+        edited_data={}
+
+        og_ref=self.root.get_reference_by_key(citation_key)
+        og_tags=og_ref.tags
+        reference_type=og_ref.reference_type
+
+        for k, v in og_ref.fields.items():
+            edit = self.root.io_handler.read_input(
+                f"insert {k} [{v}]: "
+            )
+            if not edit:
+                edit=v
+            edited_data[k]=edit
+
+        edited_tags=[]
+
+        for tag in og_tags:
+            edited_tag = self.root.io_handler.read_input(
+                f"Edit tag or type q to discard [{tag}]: "
+            ).strip()
+            if edited_tag == "q":
+                continue
+            edited_tags.append(edited_tag)
+
+        while True:
+            tag = self.root.io_handler.read_input(
+                "Enter a new tag or type q to stop: "
+            ).strip()
+            if tag == "q":
+                break
+            edited_tags.append(tag)
+
+        edited_ref = Reference(reference_type, **edited_data)
+        edited_ref.tags=edited_tags
+        self.root.remove_reference(citation_key)
+        edited_ref.citation_key = edited_ref.generate_citation_key()
+        self.root.add_source(edited_ref)
+        self.root.io_handler.write_output(f"Reference edited ( {og_ref.citation_key} --> {edited_ref.citation_key} )")
