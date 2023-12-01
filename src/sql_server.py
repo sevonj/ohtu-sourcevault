@@ -1,3 +1,4 @@
+""" Kirjasto AWS-palveluja varten """
 import boto3
 
 

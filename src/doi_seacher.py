@@ -1,3 +1,4 @@
+""" Kirjasto DOI-hakuja varten """
 import re
 from habanero import cn
 from reference import Reference
