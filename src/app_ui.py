@@ -303,10 +303,17 @@ class AppUI:
         citation_key = self.root.io_handler.read_input(
             "Enter the citation key of the reference you wish to edit: "
         ).strip()
+        og_ref=self.root.get_reference_by_key(citation_key)
+
+        if not og_ref:
+            self.root.io_handler.write_output(
+                f"Citation key {citation_key} did not match any references\n"
+            )
+            return
+
         self.root.io_handler.write_output("Type to edit or leave blank for [original value]")
         edited_data={}
 
-        og_ref=self.root.get_reference_by_key(citation_key)
         og_tags=og_ref.tags
         reference_type=og_ref.reference_type
 
@@ -326,6 +333,8 @@ class AppUI:
             ).strip()
             if edited_tag == "q":
                 continue
+            if not edited_tag:
+                edited_tag=tag
             edited_tags.append(edited_tag)
 
         while True:
