@@ -11,7 +11,9 @@ class TestRoot(unittest.TestCase):
     def setUp(self):
         app_writer = Writer("test_bibtexdata.bib")
         db = Database("test_database.db")
-        self.root = Root(db, app_writer, None, uses_database=False, io_handler=StubIO([]))
+        self.root = Root(
+            db, app_writer, None, uses_database=False, io_handler=StubIO([])
+        )
 
     def test_can_add_source_to_database(self):
         ref = Reference(

@@ -5,6 +5,7 @@ from database_handler import Database
 from writer import Writer
 from stub_io import StubIO
 
+
 class AppLibrary:
     """
     Apin hyödyntämä kirjasto.
@@ -42,9 +43,13 @@ class AppLibrary:
             kuvaus
         """
         self._io = StubIO([])
-        
+
         self.root = Root(
-            Database("robot_data.db"), Writer("robot_bibtex.bib"), cloud_data_handler=None, uses_database=False, io_handler=self._io
+            Database("robot_data.db"),
+            Writer("robot_bibtex.bib"),
+            cloud_data_handler=None,
+            uses_database=False,
+            io_handler=self._io,
         )
         self.app = AppUI(self.root)
 
