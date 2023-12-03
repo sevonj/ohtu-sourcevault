@@ -1,5 +1,5 @@
 *** Settings ***
-Library  ../app_library.py
+Library  ../AppLibrary.py
 
 *** Keywords ***
 Input Command
@@ -16,5 +16,5 @@ Create Source
     Input Command  q
 
 Run
-    Input Command  8
+    Input Command  10
     Run Application

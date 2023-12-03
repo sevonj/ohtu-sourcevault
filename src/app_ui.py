@@ -83,6 +83,7 @@ class AppUI:
                 case "10":
                     # Lopetus
                     break
+        
         self.root.update_database()
 
     def search_by_doi(self):
@@ -95,7 +96,7 @@ class AppUI:
         muuttuja : tyyppi
             kuvaus
         """
-        doi = input("Enter a DOI: ")
+        doi = self.root.io_handler.read_input("Enter a DOI: ")
         ds = DOISearcher()
         ref = ds.find_by_doi(doi)
         self.root.add_source(ref)

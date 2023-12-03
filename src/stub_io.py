@@ -30,7 +30,7 @@ class StubIO:
         self.inputs = inputs
         self.outputs = []
 
-    def read_input(self):
+    def read_input(self, msg=""):
         """
         Kuvaus Funktion toiminnalisuudesta
         ...
