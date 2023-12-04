@@ -40,6 +40,8 @@ class StubIO:
         muuttuja : tyyppi
             kuvaus
         """
+        if msg!="":
+            print(msg)
         return self.inputs.pop(0)
 
     def write_output(self, text):
