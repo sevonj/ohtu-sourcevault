@@ -43,8 +43,13 @@ class AppLibrary:
             kuvaus
         """
         self._io = StubIO([])
+
         self.root = Root(
-            Database("robot_data.db"), Writer("robot_bibtex.bib"), self._io
+            Database("robot_data.db"),
+            Writer("robot_bibtex.bib"),
+            cloud_data_handler=None,
+            uses_database=False,
+            io_handler=self._io,
         )
         self.app = AppUI(self.root)
 

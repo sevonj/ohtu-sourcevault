@@ -25,16 +25,17 @@ class ServerHandler:
     upload_references():
         Tallentaa tietokannan AWS-pilvipalveluun.
     """
+
     def __init__(self, aws_key, aws_secret_key, local_db, remote_db, bucket_name):
         self.local_db = local_db
         self.remote_db = remote_db
         self.bucket_name = bucket_name
         self.s3 = boto3.client(
-            's3',
+            "s3",
             aws_access_key_id=aws_key,
             aws_secret_access_key=aws_secret_key,
-            region_name='eu-north-1'
-            )
+            region_name="eu-north-1",
+        )
 
     def get_references(self):
         """

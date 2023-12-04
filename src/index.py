@@ -11,11 +11,7 @@ aws_key = env_config["AWS_ACCESS_KEY_ID"]
 aws_secret_key = env_config["AWS_SECRET_ACCESS_KEY"]
 
 app_cloud_database = ServerHandler(
-    aws_key,
-    aws_secret_key,
-    "database.db",
-    "tietokanta.db",
-    "sourcevaultbucket"
+    aws_key, aws_secret_key, "database.db", "tietokanta.db", "sourcevaultbucket"
 )
 app_database = Database("database.db")
 app_writer = Writer("data.bib")

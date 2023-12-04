@@ -36,7 +36,7 @@ class Root:
         data_handler,
         writer,
         cloud_data_handler,
-        uses_database = True,
+        uses_database=True,
         io_handler=ConsoleIO(),
         sources=None,
         location="data.bib",

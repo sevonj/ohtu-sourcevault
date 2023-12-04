@@ -3,6 +3,7 @@ import os
 from reference import Reference
 from doi_seacher import DOISearcher
 
+
 class AppUI:
     """
     Kuvaus luokan päätehtävästä
@@ -83,6 +84,7 @@ class AppUI:
                 case "10":
                     # Lopetus
                     break
+
         self.root.update_database()
 
     def search_by_doi(self):
@@ -95,13 +97,12 @@ class AppUI:
         muuttuja : tyyppi
             kuvaus
         """
-        doi = input("Enter a DOI: ")
+        doi = self.root.io_handler.read_input("Enter a DOI: ")
         ds = DOISearcher()
         ref = ds.find_by_doi(doi)
         self.root.add_source(ref)
         # TODO! Add with tags!
         print("Source added!")
-
 
     def create_new(self):
         """
@@ -142,8 +143,7 @@ class AppUI:
                 case "6":
                     return
                 case default:  # pylint: disable=unused-variable
-                    self.root.io_handler.write_output(
-                        "Please pick a valid option")
+                    self.root.io_handler.write_output("Please pick a valid option")
                     continue
 
             for field in required_fields.split("|"):
@@ -286,8 +286,7 @@ class AppUI:
             self.root.io_handler.write_output("exiting.")
             return
 
-        found_refs = list(
-            filter(lambda x: tag_search in x.tags, self.root.my_sources))
+        found_refs = list(filter(lambda x: tag_search in x.tags, self.root.my_sources))
 
         if len(found_refs) == 0:
             self.root.io_handler.write_output(
@@ -307,7 +306,7 @@ class AppUI:
         citation_key = self.root.io_handler.read_input(
             "Enter the citation key of the reference you wish to edit: "
         ).strip()
-        og_ref=self.root.get_reference_by_key(citation_key)
+        og_ref = self.root.get_reference_by_key(citation_key)
 
         if not og_ref:
             self.root.io_handler.write_output(
@@ -315,21 +314,21 @@ class AppUI:
             )
             return
 
-        self.root.io_handler.write_output("Type to edit or leave blank for [original value]")
-        edited_data={}
+        self.root.io_handler.write_output(
+            "Type to edit or leave blank for [original value]"
+        )
+        edited_data = {}
 
-        og_tags=og_ref.tags
-        reference_type=og_ref.reference_type
+        og_tags = og_ref.tags
+        reference_type = og_ref.reference_type
 
         for k, v in og_ref.fields.items():
-            edit = self.root.io_handler.read_input(
-                f"insert {k} [{v}]: "
-            )
+            edit = self.root.io_handler.read_input(f"insert {k} [{v}]: ")
             if not edit:
-                edit=v
-            edited_data[k]=edit
+                edit = v
+            edited_data[k] = edit
 
-        edited_tags=[]
+        edited_tags = []
 
         for tag in og_tags:
             edited_tag = self.root.io_handler.read_input(
@@ -338,7 +337,7 @@ class AppUI:
             if edited_tag == "q":
                 continue
             if not edited_tag:
-                edited_tag=tag
+                edited_tag = tag
             edited_tags.append(edited_tag)
 
         while True:
@@ -350,8 +349,10 @@ class AppUI:
             edited_tags.append(tag)
 
         edited_ref = Reference(reference_type, **edited_data)
-        edited_ref.tags=edited_tags
+        edited_ref.tags = edited_tags
         self.root.remove_reference(citation_key)
         edited_ref.citation_key = edited_ref.generate_citation_key()
         self.root.add_source(edited_ref)
-        self.root.io_handler.write_output(f"Reference edited ( {og_ref.citation_key} --> {edited_ref.citation_key} )")
+        self.root.io_handler.write_output(
+            f"Reference edited ( {og_ref.citation_key} --> {edited_ref.citation_key} )"
+        )

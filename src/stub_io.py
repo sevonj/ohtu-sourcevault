@@ -30,7 +30,7 @@ class StubIO:
         self.inputs = inputs
         self.outputs = []
 
-    def read_input(self):
+    def read_input(self, msg=""):
         """
         Kuvaus Funktion toiminnalisuudesta
         ...
@@ -40,6 +40,8 @@ class StubIO:
         muuttuja : tyyppi
             kuvaus
         """
+        if msg!="":
+            print(msg)
         return self.inputs.pop(0)
 
     def write_output(self, text):

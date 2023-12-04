@@ -221,7 +221,7 @@ class Database:
                         title=row[4],
                         year=row[5],
                         howpublished=row[11],
-                        note=row[12]
+                        note=row[12],
                     )
 
                 case "phdthesis":
@@ -234,7 +234,7 @@ class Database:
                         year=row[5],
                         school=row[13],
                         address=row[14],
-                        month=row[15]
+                        month=row[15],
                     )
 
             references.append(reference)

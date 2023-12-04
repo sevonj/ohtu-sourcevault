@@ -4,7 +4,6 @@ from bibtex_converter import convert_to_bibtex
 from reference import Reference
 
 
-
 class Writer:
     """
     Kuvaus luokan päätehtävästä
@@ -72,7 +71,7 @@ class Writer:
             kuvaus
         """
         if content != []:
-            with open(self.location, "w", encoding="utf-8")  as file:
+            with open(self.location, "w", encoding="utf-8") as file:
                 for ref in content:
                     bibtex_str = convert_to_bibtex(ref.reference_type, **ref.fields)
                     file.write(bibtex_str)
