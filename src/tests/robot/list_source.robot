@@ -2,6 +2,8 @@
 Resource  resource.robot
 Test Setup  Clear
 
+# Käyttäjänä pystyn listaamaan lisätyt viitteet
+
 *** Test Cases ***
 List Correct Keys
     Create Source
