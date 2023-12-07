@@ -281,7 +281,7 @@ class AppUI:
         """
 
         while True:
-            field_key = ''
+            field_key = ""
             field_type = self.root.io_handler.read_input(
                 "Choose a field to filter by (type a number):\n1. Author\n2. Year\n3. Tag\n4. Cancel\nChoice: "
             ).strip()
@@ -294,7 +294,7 @@ class AppUI:
                     field_key = "tags"
                 case "4":
                     return
-                case default:
+                case default: # pylint: disable=unused-variable
                     self.root.io_handler.write_output("Please pick a valid option")
                     continue
 
@@ -304,14 +304,24 @@ class AppUI:
             if search == "q":
                 self.root.io_handler.write_output("exiting.")
                 return
-            
+
             match field_key:
                 case "author":
-                    found_refs = list(filter(lambda x: search == x.fields["author"], self.root.my_sources))
+                    found_refs = list(
+                        filter(
+                            lambda x: search == x.fields["author"], self.root.my_sources
+                        )
+                    )
                 case "year":
-                    found_refs = list(filter(lambda x: search == x.fields["year"], self.root.my_sources))
+                    found_refs = list(
+                        filter(
+                            lambda x: search == x.fields["year"], self.root.my_sources
+                        )
+                    )
                 case "tags":
-                    found_refs = list(filter(lambda x: search in x.tags, self.root.my_sources))
+                    found_refs = list(
+                        filter(lambda x: search in x.tags, self.root.my_sources)
+                    )
 
             if len(found_refs) == 0:
                 self.root.io_handler.write_output(
