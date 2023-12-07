@@ -48,7 +48,7 @@ class AppUI:
             command = self.root.io_handler.read_input(
                 (
                     "\n1 : create new\n2 : list sources as text\n3 : create bibtext\n4 : list all citation keys\n"
-                    "5 : show based on citation key\n6 : delete based on citation key\n7 : find based on a tag"
+                    "5 : show based on citation key\n6 : delete based on citation key\n7 : filter references"
                     "\n8 : find reference with DOI\n9 : edit based on citation key\n10 : exit program\n"
                 )
             )
