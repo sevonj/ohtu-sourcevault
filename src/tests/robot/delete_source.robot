@@ -2,6 +2,8 @@
 Resource  resource.robot
 Test Setup  Clear
 
+# Käyttäjänä pystyn poistamaan lisätyn viitteen
+
 *** Test Cases ***
 Delete Existing Source
     Create Source
