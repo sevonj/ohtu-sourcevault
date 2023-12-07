@@ -43,6 +43,45 @@ class TestRoot(unittest.TestCase):
         self.assertEqual(read_ref.tags[0], "good")
         self.assertEqual(read_ref.tags[1], "old")
 
+
+    def test_cant_add_duplicate_source_to_database(self):
+        ref = Reference(
+            "book",
+            "Martti08",
+            tags=["good", "old"],
+            year="2008",
+            title="titled",
+            author="Martti",
+            publisher="publ",
+        )
+
+        ref2 = Reference(
+            "book",
+            "Martti08",
+            tags=["good", "old"],
+            year="2008",
+            title="titled",
+            author="Martti",
+            publisher="publ",
+        )
+
+        self.root.add_source(ref)
+        self.root.add_source(ref2)
+        self.root.update_database()
+
+        # Read sources from database
+        self.root.read_sources_from_database()
+        read_ref = self.root.my_sources[1]
+
+        self.assertEqual(read_ref.reference_type, "book")
+        self.assertEqual(read_ref.citation_key, "Martti088")
+        self.assertEqual(str(read_ref.fields.get("year")), "2008")
+        self.assertEqual(read_ref.fields.get("title"), "titled")
+        self.assertEqual(read_ref.fields.get("author"), "Martti")
+        self.assertEqual(read_ref.fields.get("publisher"), "publ")
+        self.assertEqual(read_ref.tags[0], "good")
+        self.assertEqual(read_ref.tags[1], "old")
+
     def test_search_reference_with_key_works(self):
         ref = Reference(
             "book",
