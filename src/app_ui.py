@@ -279,25 +279,50 @@ class AppUI:
         muuttuja : tyyppi
             kuvaus
         """
-        tag_search = self.root.io_handler.read_input(
-            "Enter the tag you want to search by or q to quit: "
-        ).strip()
-        if tag_search == "q":
-            self.root.io_handler.write_output("exiting.")
-            return
 
-        found_refs = list(filter(lambda x: tag_search in x.tags, self.root.my_sources))
+        while True:
+            field_key = ''
+            field_type = self.root.io_handler.read_input(
+                "Choose a field to filter by (type a number):\n1. Author\n2. Year\n3. Tag\n4. Cancel\nChoice: "
+            ).strip()
+            match field_type:
+                case "1":
+                    field_key = "author"
+                case "2":
+                    field_key = "year"
+                case "3":
+                    field_key = "tags"
+                case "4":
+                    return
+                case default:
+                    self.root.io_handler.write_output("Please pick a valid option")
+                    continue
 
-        if len(found_refs) == 0:
-            self.root.io_handler.write_output(
-                f"No sources found with tag {tag_search}!"
-            )
-        else:
-            self.root.io_handler.write_output(
-                f"Found {len(found_refs)} references with tag: {tag_search}\n"
-            )
-            for ref in found_refs:
-                self.root.io_handler.write_output(str(ref))
+            search = self.root.io_handler.read_input(
+                "Enter the value you want to search by or q to quit: "
+            ).strip()
+            if search == "q":
+                self.root.io_handler.write_output("exiting.")
+                return
+            
+            match field_key:
+                case "author":
+                    found_refs = list(filter(lambda x: search == x.fields["author"], self.root.my_sources))
+                case "year":
+                    found_refs = list(filter(lambda x: search == x.fields["year"], self.root.my_sources))
+                case "tags":
+                    found_refs = list(filter(lambda x: search in x.tags, self.root.my_sources))
+
+            if len(found_refs) == 0:
+                self.root.io_handler.write_output(
+                    f"No sources found with value {search}!"
+                )
+            else:
+                self.root.io_handler.write_output(
+                    f"Found {len(found_refs)} references with: {search}\n"
+                )
+                for ref in found_refs:
+                    self.root.io_handler.write_output(str(ref))
 
     def edit_by_key(self):
         """
