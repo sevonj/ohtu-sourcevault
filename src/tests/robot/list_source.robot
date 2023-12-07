@@ -6,7 +6,7 @@ Test Setup  Clear
 
 *** Test Cases ***
 List Correct Keys
-    Create Source
+    Create Book Source
     Input Command  4
     Input Command  10
     Run

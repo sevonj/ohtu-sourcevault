@@ -4,4 +4,7 @@ Test Setup  Clear
 
 # kayttäjä voi tarkastella lähdeviitteitä BibTeX modossa
 
-# *** Test Cases ***
+*** Test Cases ***
+# Bibtex File Is Created
+
+# Bibtex File Contains Sources
