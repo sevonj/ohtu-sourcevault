@@ -6,7 +6,7 @@ Test Setup  Clear
 
 *** Test Cases ***
 Delete Existing Source
-    Create Source
+    Create Book Source
     Input Command  6
     Input Command  Kirjailija23
     Run

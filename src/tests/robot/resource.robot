@@ -6,7 +6,7 @@ Input Command
     [Arguments]  ${command}
     Input  ${command}
 
-Create Source
+Create Book Source
     Input Command  1
     Input Command  1
     Input Command  Kirjailija

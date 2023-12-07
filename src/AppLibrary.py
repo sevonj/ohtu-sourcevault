@@ -102,3 +102,4 @@ class AppLibrary:
         """
         self.root.data_handler.clear_database()
         self.root.remove_reference("Kirjailija23")
+        # poista kaikki

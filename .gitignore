@@ -10,4 +10,5 @@ __pycache__
 test_bibtexdata.bib
 test_database.db
 database.db
+robot_data.db
 .env
