@@ -61,6 +61,11 @@ class TestRoot(unittest.TestCase):
         self.assertEqual(reference, valid_search)
         self.assertEqual(False, invalid_search)
 
+    def test_cant_remove_non_existet_source_from_database(self):
+        self.root.read_sources_from_database()
+        #cant remove non-existent data
+        self.assertEqual(self.root.remove_reference("Martti00"), False)
+    
     def test_can_remove_source_from_database(self):
         self.root.read_sources_from_database()
         # Not empty, contains source added in previous test
