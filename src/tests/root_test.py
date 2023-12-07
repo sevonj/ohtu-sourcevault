@@ -1,18 +1,28 @@
 import unittest
+import botocore.exceptions
+import boto3.exceptions
 from root import Root
 from writer import Writer
 from database_handler import Database
 from reference import Reference
 from stub_io import StubIO
-from bibtex_converter import convert_to_bibtex
+from sql_server import ServerHandler
+
 
 
 class TestRoot(unittest.TestCase):
     def setUp(self):
+        app_cloud_database = ServerHandler(
+            "123", "12345", "test_database.db", "tietokanta.db", "sourcevaultbucket"
+        )
         app_writer = Writer("test_bibtexdata.bib")
         db = Database("test_database.db")
         self.root = Root(
-            db, app_writer, None, uses_database=False, io_handler=StubIO([])
+            db,
+            app_writer,
+            app_cloud_database,
+            uses_database=False,
+            io_handler=StubIO([]),
         )
 
     def test_can_add_source_to_database(self):
@@ -42,7 +52,6 @@ class TestRoot(unittest.TestCase):
         self.assertEqual(read_ref.fields.get("publisher"), "publ")
         self.assertEqual(read_ref.tags[0], "good")
         self.assertEqual(read_ref.tags[1], "old")
-
 
     def test_cant_add_duplicate_source_to_database(self):
         ref = Reference(
@@ -102,9 +111,9 @@ class TestRoot(unittest.TestCase):
 
     def test_cant_remove_non_existet_source_from_database(self):
         self.root.read_sources_from_database()
-        #cant remove non-existent data
+        # cant remove non-existent data
         self.assertEqual(self.root.remove_reference("Martti00"), False)
-    
+
     def test_can_remove_source_from_database(self):
         self.root.read_sources_from_database()
         # Not empty, contains source added in previous test
@@ -114,3 +123,13 @@ class TestRoot(unittest.TestCase):
         # Should now be empty
         self.root.read_sources_from_database()
         self.assertEqual(self.root.my_sources, [])
+
+    def test_reading_from_cloud_fails_with_invalid_keys(self):
+        self.root.uses_database = True
+        self.root.read_sources_from_database()
+        self.assertRaises(botocore.exceptions.ClientError)
+
+    def test_uploading_to_cloud_fails_with_invalid_keys(self):
+        self.root.uses_database = True
+        self.root.update_database()
+        self.assertRaises(boto3.exceptions.S3UploadFailedError)
